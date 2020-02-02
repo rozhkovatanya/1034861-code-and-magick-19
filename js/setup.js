@@ -56,7 +56,7 @@ var getRandomElement = function (array) {
 };
 
 var wizards = [];
-for (var i = 0; i < 4; i++) {
+for (var num = 0; num < 4; num++) {
   wizards.push({
     name: getRandomElement(WIZARD_NAMES),
     surname: getRandomElement(WIZARD_SURNAMES),
