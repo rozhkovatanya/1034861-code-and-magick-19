@@ -5,7 +5,7 @@ var MIN_NAME_LENGTH = 2;
 var MAX_NAME_LENGTH = 25;
 
 var setup = document.querySelector('.setup');
-var setupOpen = document.querySelector('.setup-open');
+var setupOpenIcon = document.querySelector('.setup-open-icon');
 var setupClose = setup.querySelector('.setup-close');
 var userNameInput = setup.querySelector('.setup-user-name');
 
@@ -15,27 +15,25 @@ userNameInput.addEventListener('input', function (evt) {
   if (target.value.length < MIN_NAME_LENGTH) {
     target.setCustomValidity(
         'Имя должно состоять минимум из ' +
-      MIN_NAME_LENGTH +
-      '-х символов'
+         MIN_NAME_LENGTH +
+        '-х символов'
     );
   } else if (target.value.length > MAX_NAME_LENGTH) {
     target.setCustomValidity(
         'Имя не должно превышать ' +
-      MAX_NAME_LENGTH +
-      '-ти символов'
+        MAX_NAME_LENGTH +
+        '-ти символов'
     );
   } else {
     target.setCustomValidity('');
   }
 });
 
-
 var onPopupEscPress = function (evt) {
-  if (evt.key === ESC_KEY) {
+  if (evt.key === ESC_KEY && evt.target !== userNameInput) {
     closePopup();
   }
 };
-
 
 var openPopup = function () {
   setup.classList.remove('hidden');
@@ -47,11 +45,11 @@ var closePopup = function () {
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
-setupOpen.addEventListener('click', function () {
+setupOpenIcon.addEventListener('click', function () {
   openPopup();
 });
 
-setupOpen.addEventListener('keydown', function (evt) {
+setupOpenIcon.addEventListener('keydown', function (evt) {
   if (evt.key === ENTER_KEY) {
     openPopup();
   }
