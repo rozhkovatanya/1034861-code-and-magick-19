@@ -27,6 +27,7 @@ for (var i = 0; i < wizards.length; i++) {
   similarListElement.appendChild(wizardElement);
 }
 
+
 var shopElement = document.querySelector('.setup-artifacts-shop');
 var draggedItem = null;
 
