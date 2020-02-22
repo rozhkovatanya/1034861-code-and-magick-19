@@ -101,6 +101,61 @@
     wizardFireballInput.value = fireballColor;
   });
 
+  var userDialog = document.querySelector('.setup');
+
+  var similarListElement = userDialog.querySelector('.setup-similar-list');
+
+  var similarWizardTemplate = document.querySelector('#similar-wizard-template')
+  .content
+  .querySelector('.setup-similar-item');
+
+  window.backend.load(function (wizards) {
+    for (var i = 0; i < 4; i++) {
+      var wizardElement = similarWizardTemplate.cloneNode(true);
+      var wizard = window.getRandomElement(wizards);
+      wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
+      wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+      wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
+
+      similarListElement.appendChild(wizardElement);
+    }
+  }, onError);
+
+  var onError = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'fixed';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+    node.id = 'errorHeader';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  var setupWizardForm = document.querySelector('.setup-wizard-form');
+  var onFormSubmit = function (evt) {
+    evt.preventDefault();
+    var data = new FormData();
+    data.append('fireball-color', wizardFireballInput.value);
+    data.append('eyes-color', wizardEyesInput.value);
+    data.append('coat-color', wizardCoatInput.value);
+    data.append('files', []);
+    data.append('username', userNameInput.value);
+
+    var onSuccess = function () {
+      closePopup();
+      var errorElement = document.getElementById('errorHeader');
+      if (errorElement) {
+        errorElement.remove();
+      }
+    };
+
+    window.backend.save(data, onSuccess, onError);
+  };
+  setupWizardForm.addEventListener('submit', onFormSubmit);
+
 })();
 
 
